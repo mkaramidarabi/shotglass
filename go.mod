@@ -3,9 +3,9 @@ module shotglass
 go 1.18
 
 require (
+	github.com/jasonlvhit/gocron v0.0.1
 	github.com/kbinani/screenshot v0.0.0-20210720154843-7d3a670d8329
 	github.com/minio/minio-go/v7 v7.0.24
-	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.8.1
 	gopkg.in/yaml.v2 v2.2.8
 )

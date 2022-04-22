@@ -17,11 +17,12 @@
 # goland ide
 .idea
 
-# Test binary, built with `go test -c`
+# Test binary, built with `go test -c`i
 *.test
 
-.*exe
+*.exe
 
+*.png
 
 # config files
 config.yaml

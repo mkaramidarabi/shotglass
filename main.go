@@ -2,15 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/robfig/cron"
+	"github.com/jasonlvhit/gocron"
 	"os"
 	"shotglass/internal/screen"
 	"shotglass/internal/storage"
 )
 
 func main() {
-	cron := cron.New()
-	cron.AddFunc("@every 1m", screenShotAndUpload)
+	cron := gocron.NewScheduler()
+	err := cron.Every(1).Minutes().Do(screenShotAndUpload)
+	if err != nil {
+		fmt.Printf("Error occured on cron %s\n", err)
+	}
 	cron.Start()
 	fmt.Println("JOB STARTED ...")
 	screenShotAndUpload()
