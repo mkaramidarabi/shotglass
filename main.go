@@ -32,8 +32,10 @@ func screenShotAndUpload() {
 		fmt.Printf("Error on getting root directory files: %s\n", err)
 	}
 	if len(files) > 0 {
-		for _, file := range files {
-			err = os.Rename(file, fmt.Sprintf("%s.%d", file, now))
+		for i, file := range files {
+			name := fmt.Sprintf("%s.%d", file, now)
+			err = os.Rename(file, name)
+			files[i] = name
 			if err != nil {
 				fmt.Printf("Error on renaming file: %s\n", err)
 			}
