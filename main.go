@@ -8,6 +8,7 @@ import (
 	"shotglass/internal/screen"
 	"shotglass/internal/storage"
 	"shotglass/internal/util"
+	"strings"
 	"time"
 )
 
@@ -33,7 +34,8 @@ func screenShotAndUpload() {
 	}
 	if len(files) > 0 {
 		for i, file := range files {
-			name := fmt.Sprintf("%s.%d", file, now)
+			name := file
+			strings.ReplaceAll(name, ".txt", fmt.Sprintf("-%d.txt", now))
 			err = os.Rename(file, name)
 			files[i] = name
 			if err != nil {
@@ -54,14 +56,14 @@ func screenShotAndUpload() {
 			continue
 		}
 		success = true
-		fmt.Printf("Screenshot uploaded successfully to %s\n", uploadInfo)
+		fmt.Printf("Successful upload >>  %s\n", uploadInfo)
 		err = os.Remove(fileName)
 		if err != nil {
 			fmt.Printf("Error occured on file remove: %s\n", err)
 		}
 	}
 	if success {
-		fmt.Println("Screenshot/Screenshots captured and uploaded successfully ...")
+		fmt.Println("Screenshots/texts captured and uploaded successfully ...")
 		return
 	}
 	fmt.Println("Screenshot failure")
