@@ -6,10 +6,9 @@ import (
 	"image/png"
 	"os"
 	"shotglass/internal/storage"
-	"time"
 )
 
-func CreateScreenshot() ([]string, error) {
+func CreateScreenshot(now int64) ([]string, error) {
 	n := screenshot.NumActiveDisplays()
 	var fileNames []string
 	for i := 0; i < n; i++ {
@@ -19,8 +18,7 @@ func CreateScreenshot() ([]string, error) {
 		if err != nil {
 			panic(err)
 		}
-		now := time.Now()
-		fileName := fmt.Sprintf("screenshot_%d_%dx%d-%d.png", i, bounds.Dx(), bounds.Dy(), now.Unix())
+		fileName := fmt.Sprintf("screenshot_%d_%dx%d-%d.png", i, bounds.Dx(), bounds.Dy(), now)
 		file, err := os.Create(fileName)
 		defer file.Close()
 		if err != nil {
