@@ -20,6 +20,8 @@
 # Test binary, built with `go test -c`
 *.test
 
+.*exe
+
 
 # config files
 config.yaml
