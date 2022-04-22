@@ -13,6 +13,7 @@ type Config struct {
 	AwsSecret   string `yaml:"awsSecret"`
 	AwsEndpoint string `yaml:"awsEndpoint"`
 	AwsBucket   string `yaml:"awsBucket"`
+	Root        string `yaml:"root"`
 }
 
 var AppConfig = InitAppConfig()

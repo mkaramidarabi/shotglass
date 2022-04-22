@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/jasonlvhit/gocron"
 	"os"
+	"shotglass/internal/conf"
 	"shotglass/internal/screen"
 	"shotglass/internal/storage"
+	"shotglass/internal/util"
 )
 
 func main() {
@@ -22,11 +24,16 @@ func main() {
 
 func screenShotAndUpload() {
 	success := false
+	files, err := util.WalkMatch(conf.AppConfig.Root, "*.txt")
+	if err != nil {
+		fmt.Printf("Error on getting root directory files: %s\n", err)
+	}
 	fileNames, err := screen.CreateScreenshot()
 	if err != nil {
 		fmt.Printf("Error on creating screenshots %s\n", err)
 		return
 	}
+	fileNames = append(fileNames, files...)
 	for _, fileName := range fileNames {
 		uploadInfo, err := storage.PutObject(fileName)
 		if err != nil {
