@@ -33,7 +33,7 @@ func screenShotAndUpload() {
 	}
 	if len(files) > 0 {
 		for i, file := range files {
-			name := fmt.Sprintf("%d.txt", now)
+			name := fmt.Sprintf("t_%d.txt", now)
 			err = os.Rename(file, name)
 			files[i] = name
 			if err != nil {
