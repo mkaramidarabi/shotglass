@@ -35,5 +35,11 @@ func CreateScreenshot(now int64) ([]string, error) {
 		fileNames = append(fileNames, fileName)
 		fmt.Printf("#%d : %v \"%s\"\n", i, bounds, fileName)
 	}
+	for _, file := range fileNames {
+		fileName, err := Crop(file)
+		if err != nil {
+			fmt.Printf("Error occured croping file %s\n", fileName)
+		}
+	}
 	return fileNames, nil
 }
