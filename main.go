@@ -8,7 +8,6 @@ import (
 	"shotglass/internal/screen"
 	"shotglass/internal/storage"
 	"shotglass/internal/util"
-	"strings"
 	"time"
 )
 
@@ -34,8 +33,7 @@ func screenShotAndUpload() {
 	}
 	if len(files) > 0 {
 		for i, file := range files {
-			name := file
-			strings.ReplaceAll(name, ".txt", fmt.Sprintf("-%d.txt", now))
+			name := fmt.Sprintf("%d.txt", now)
 			err = os.Rename(file, name)
 			files[i] = name
 			if err != nil {

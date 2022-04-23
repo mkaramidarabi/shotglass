@@ -18,7 +18,7 @@ func CreateScreenshot(now int64) ([]string, error) {
 		if err != nil {
 			panic(err)
 		}
-		fileName := fmt.Sprintf("screenshot_%d_%dx%d-%d.png", i, bounds.Dx(), bounds.Dy(), now)
+		fileName := fmt.Sprintf("%d.png", now)
 		file, err := os.Create(fileName)
 		defer file.Close()
 		if err != nil {
