@@ -7,6 +7,7 @@ import (
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	"net/http"
 	"os"
+	"path/filepath"
 	"shotglass/internal/conf"
 )
 
@@ -33,7 +34,7 @@ func PutObject(fileName string) (minio.UploadInfo, error) {
 	//https://docs.min.io/docs/golang-client-api-reference.html#FPutObject
 	uploadInfo, err = minioClient.FPutObject(context.Background(),
 		conf.AppConfig.AwsBucket,
-		fileName,
+		filepath.Base(fileName),
 		fileName,
 		minio.PutObjectOptions{
 			ContentType: contentType,

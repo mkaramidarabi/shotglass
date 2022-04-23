@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 )
 
-func WalkMatch(root, pattern string) ([]string, error) {
+func WalkMatch(root string, pattern string) ([]string, error) {
 	var matches []string
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
