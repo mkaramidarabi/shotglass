@@ -52,7 +52,12 @@ func getFileContentType(fileName string) (string, error) {
 		fmt.Println(err)
 		return "", err
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err = file.Close()
+		if err != nil {
+
+		}
+	}(file)
 	buffer := make([]byte, 512)
 
 	_, err = file.Read(buffer)

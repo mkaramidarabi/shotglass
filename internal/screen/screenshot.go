@@ -35,7 +35,6 @@ func createScreenshotByDisplayNumber(i int, now int64) (string, error) {
 	}
 	fileName := fmt.Sprintf("p_%d.png", now)
 	file, err := os.Create(fileName)
-	defer file.Close()
 	if err != nil {
 		return "", err
 	}
@@ -48,6 +47,10 @@ func createScreenshotByDisplayNumber(i int, now int64) (string, error) {
 		return "", err
 	}
 	fmt.Printf("#%d : %v \"%s\"\n", i, bounds, fileName)
+	if err != nil {
+		return "", err
+	}
+	err = file.Close()
 	if err != nil {
 		return "", err
 	}

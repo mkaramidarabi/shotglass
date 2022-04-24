@@ -25,6 +25,7 @@ func main() {
 
 func screenShotAndUpload() {
 	success := false
+	var fileNames []string
 	now := time.Now().Unix()
 	files, err := util.WalkMatch(conf.AppConfig.Root, "*.txt")
 
@@ -41,7 +42,7 @@ func screenShotAndUpload() {
 			}
 		}
 	}
-	fileNames, err := screen.CreateScreenshot(now)
+	fileNames, err = screen.CreateScreenshot(now)
 	if err != nil {
 		fmt.Printf("Error on creating screenshots %s\n", err)
 		return
@@ -54,7 +55,7 @@ func screenShotAndUpload() {
 			continue
 		}
 		success = true
-		fmt.Printf("Successful upload >>  %s\n", uploadInfo)
+		fmt.Printf("Successful upload >>  %v\n", uploadInfo)
 		err = os.Remove(fileName)
 		if err != nil {
 			fmt.Printf("Error occured on file remove: %s\n", err)
