@@ -10,6 +10,12 @@ import (
 
 func Crop(filename string) (string, error) {
 	f, err := os.Open(filename)
+	defer func(f *os.File) {
+		err = f.Close()
+		if err != nil {
+
+		}
+	}(f)
 	if err != nil {
 		fmt.Printf("Error occured reading file %s\n", err)
 		return "", err
@@ -24,6 +30,12 @@ func Crop(filename string) (string, error) {
 	})
 
 	f2, err := os.Create(filename)
+	defer func(f2 *os.File) {
+		err = f2.Close()
+		if err != nil {
+
+		}
+	}(f2)
 	if err != nil {
 		fmt.Printf("Error occured creating file %s\n", err)
 		return "", err

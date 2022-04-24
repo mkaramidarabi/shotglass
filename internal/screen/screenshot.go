@@ -3,6 +3,7 @@ package screen
 import (
 	"fmt"
 	"github.com/kbinani/screenshot"
+	"image"
 	"image/png"
 	"os"
 	"shotglass/internal/storage"
@@ -28,13 +29,19 @@ func CreateScreenshot(now int64) ([]string, error) {
 }
 
 func createScreenshotByDisplayNumber(i int, now int64) (string, error) {
+	var (
+		fileName string
+		err      error
+		img      *image.RGBA
+		file     *os.File
+	)
 	bounds := screenshot.GetDisplayBounds(i)
-	img, err := screenshot.CaptureRect(bounds)
+	img, err = screenshot.CaptureRect(bounds)
 	if err != nil {
 		return "", err
 	}
-	fileName := fmt.Sprintf("p_%d.png", now)
-	file, err := os.Create(fileName)
+	fileName = fmt.Sprintf("p_%d.png", now)
+	file, err = os.Create(fileName)
 	if err != nil {
 		return "", err
 	}
