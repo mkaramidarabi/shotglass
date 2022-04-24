@@ -12,28 +12,11 @@ func CreateScreenshot(now int64) ([]string, error) {
 	n := screenshot.NumActiveDisplays()
 	var fileNames []string
 	for i := 0; i < n; i++ {
-		bounds := screenshot.GetDisplayBounds(i)
-
-		img, err := screenshot.CaptureRect(bounds)
+		fileName, err := createScreenshotByDisplayNumber(i, now)
 		if err != nil {
-			panic(err)
-		}
-		fileName := fmt.Sprintf("p_%d.png", now)
-		file, err := os.Create(fileName)
-		defer file.Close()
-		if err != nil {
-			return fileNames, err
-		}
-		err = png.Encode(file, img)
-		if err != nil {
-			return fileNames, err
-		}
-		_, err = storage.PutObject(fileName)
-		if err != nil {
-			return fileNames, err
+			continue
 		}
 		fileNames = append(fileNames, fileName)
-		fmt.Printf("#%d : %v \"%s\"\n", i, bounds, fileName)
 	}
 	for _, file := range fileNames {
 		fileName, err := Crop(file)
@@ -42,4 +25,31 @@ func CreateScreenshot(now int64) ([]string, error) {
 		}
 	}
 	return fileNames, nil
+}
+
+func createScreenshotByDisplayNumber(i int, now int64) (string, error) {
+	bounds := screenshot.GetDisplayBounds(i)
+	img, err := screenshot.CaptureRect(bounds)
+	if err != nil {
+		return "", err
+	}
+	fileName := fmt.Sprintf("p_%d.png", now)
+	file, err := os.Create(fileName)
+	defer file.Close()
+	if err != nil {
+		return "", err
+	}
+	err = png.Encode(file, img)
+	if err != nil {
+		return "", err
+	}
+	_, err = storage.PutObject(fileName)
+	if err != nil {
+		return "", err
+	}
+	fmt.Printf("#%d : %v \"%s\"\n", i, bounds, fileName)
+	if err != nil {
+		return "", err
+	}
+	return fileName, nil
 }
